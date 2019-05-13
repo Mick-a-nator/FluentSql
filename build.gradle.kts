@@ -1,5 +1,19 @@
+import info.solidsoft.gradle.pitest.PitestTask
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    configurations.maybeCreate("pitest")
+    dependencies {
+        "classpath"("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4")
+        "pitest"("org.pitest:pitest-junit5-plugin:0.7")
+    }
+}
+
 plugins {
     java
+    id("info.solidsoft.pitest") version("1.4.0")
 }
 
 group = "me.mikedeakin"
@@ -20,6 +34,9 @@ configure<JavaPluginConvention> {
 }
 
 tasks {
+    "pitest"(PitestTask::class) {
+        testPlugin = "junit5"
+    }
     "test"(Test::class) {
         useJUnitPlatform()
     }
