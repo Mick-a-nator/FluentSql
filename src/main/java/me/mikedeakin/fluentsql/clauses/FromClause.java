@@ -4,4 +4,5 @@ public interface FromClause extends CanWhere, TerminatingClause {
 
     JoinClause innerJoin(String table);
     JoinClause leftJoin(String table);
+    JoinClause rightJoin(String table);
 }

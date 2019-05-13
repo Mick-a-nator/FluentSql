@@ -71,6 +71,14 @@ public class SqlBuilder implements
     }
 
     @Override
+    public JoinClause rightJoin(String table) {
+        stringBuilder.append(" RIGHT OUTER JOIN ")
+            .append(table);
+
+        return this;
+    }
+
+    @Override
     public OnClause on(String predicate) {
         stringBuilder.append(" ON ")
             .append(predicate);

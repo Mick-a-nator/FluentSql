@@ -1,5 +1,6 @@
 package me.mikedeakin.fluentsql;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,107 +47,171 @@ public class SqlBuilderTest {
         ).isEqualTo("SELECT column1, column2 FROM table_name WHERE column1 > 6 AND column2 < 32 AND column2 > 0");
     }
 
-    @Test
-    void shouldBuildSelectStatementWithInnerJoin() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .innerJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " INNER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1"
-        );
-    }
+    @Nested
+    class InnerJoins {
 
-    @Test
-    void shouldBuildSelectStatementWithInnerJoinAndMultipleJoinConditions() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .innerJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .andOn("some_table.col2 = another_table.col2")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " INNER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1" +
-                " AND ON some_table.col2 = another_table.col2"
-        );
-    }
+        @Test
+        void shouldBuildSelectStatementWithInnerJoin() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .innerJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " INNER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1"
+            );
+        }
 
-    @Test
-    void shouldAllowWhereClausesAfterInnerJoins() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .innerJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .where("some_table.col2 = another_table.col2")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " INNER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1" +
-                " WHERE some_table.col2 = another_table.col2"
-        );
-    }
+        @Test
+        void shouldBuildSelectStatementWithInnerJoinAndMultipleJoinConditions() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .innerJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .andOn("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " INNER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " AND ON some_table.col2 = another_table.col2"
+            );
+        }
 
-    @Test
-    void shouldBuildSelectStatementWithLeftOuterJoin() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .leftJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " LEFT OUTER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1"
-        );
+        @Test
+        void shouldAllowWhereClausesAfterInnerJoins() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .innerJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .where("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " INNER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " WHERE some_table.col2 = another_table.col2"
+            );
+        }
     }
+    
+    @Nested
+    class LeftOuterJoins {
 
-    @Test
-    void shouldBuildSelectStatementWithLeftOuterJoinAndMultipleJoinConditions() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .leftJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .andOn("some_table.col2 = another_table.col2")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " LEFT OUTER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1" +
-                " AND ON some_table.col2 = another_table.col2"
-        );
+        @Test
+        void shouldBuildSelectStatementWithLeftOuterJoin() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .leftJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " LEFT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1"
+            );
+        }
+
+        @Test
+        void shouldBuildSelectStatementWithLeftOuterJoinAndMultipleJoinConditions() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .leftJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .andOn("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " LEFT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " AND ON some_table.col2 = another_table.col2"
+            );
+        }
+
+        @Test
+        void shouldAllowWhereClausesAfterLeftOuterJoins() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .leftJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .where("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " LEFT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " WHERE some_table.col2 = another_table.col2"
+            );
+        }
     }
+    
+    @Nested
+    class RightOuterJoins {
 
-    @Test
-    void shouldAllowWhereClausesAfterLeftOuterJoins() {
-        assertThat(SqlBuilder
-            .select("*")
-            .from("some_table")
-            .leftJoin("another_table")
-            .on("some_table.col1 = another_table.col1")
-            .where("some_table.col2 = another_table.col2")
-            .build()
-        ).isEqualTo(
-            "SELECT *" +
-                " FROM some_table" +
-                " LEFT OUTER JOIN another_table" +
-                " ON some_table.col1 = another_table.col1" +
-                " WHERE some_table.col2 = another_table.col2"
-        );
+        @Test
+        void shouldBuildSelectStatementWithRightOuterJoin() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .rightJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " RIGHT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1"
+            );
+        }
+
+        @Test
+        void shouldBuildSelectStatementWithRightOuterJoinAndMultipleJoinConditions() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .rightJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .andOn("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " RIGHT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " AND ON some_table.col2 = another_table.col2"
+            );
+        }
+
+        @Test
+        void shouldAllowWhereClausesAfterRightOuterJoins() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .rightJoin("another_table")
+                .on("some_table.col1 = another_table.col1")
+                .where("some_table.col2 = another_table.col2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " RIGHT OUTER JOIN another_table" +
+                    " ON some_table.col1 = another_table.col1" +
+                    " WHERE some_table.col2 = another_table.col2"
+            );
+        }
     }
 }
