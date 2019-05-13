@@ -1,6 +1,6 @@
 package me.mikedeakin.fluentsql.clauses;
 
-public interface LeftOuterJoinClause {
+public interface JoinClause {
 
     OnClause on(String predicate);
 }
