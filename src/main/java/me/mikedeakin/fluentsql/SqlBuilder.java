@@ -7,6 +7,7 @@ public class SqlBuilder implements
     FromClause,
     WhereClause,
     InnerJoinClause,
+    OnClause,
     TerminatingClause
 {
     private StringBuilder stringBuilder;
@@ -62,10 +63,16 @@ public class SqlBuilder implements
     }
 
     @Override
-    public FromClause on(String predicate) {
+    public OnClause on(String predicate) {
         stringBuilder.append(" ON ")
             .append(predicate);
 
         return this;
+    }
+
+    @Override
+    public OnClause andOn(String predicate) {
+        stringBuilder.append(" AND");
+        return this.on(predicate);
     }
 }
