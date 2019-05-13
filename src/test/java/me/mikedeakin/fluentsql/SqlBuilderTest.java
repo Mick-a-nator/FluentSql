@@ -79,4 +79,22 @@ public class SqlBuilderTest {
                 " AND ON some_table.col2 = another_table.col2"
         );
     }
+
+    @Test
+    void shouldAllowWhereClausesAfterInnerJoins() {
+        assertThat(SqlBuilder
+            .select("*")
+            .from("some_table")
+            .innerJoin("another_table")
+            .on("some_table.col1 = another_table.col1")
+            .where("some_table.col2 = another_table.col2")
+            .build()
+        ).isEqualTo(
+            "SELECT *" +
+                " FROM some_table" +
+                " INNER JOIN another_table" +
+                " ON some_table.col1 = another_table.col1" +
+                " WHERE some_table.col2 = another_table.col2"
+        );
+    }
 }
