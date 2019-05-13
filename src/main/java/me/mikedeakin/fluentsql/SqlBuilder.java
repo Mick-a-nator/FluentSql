@@ -7,6 +7,7 @@ public class SqlBuilder implements
     FromClause,
     WhereClause,
     InnerJoinClause,
+    LeftOuterJoinClause,
     OnClause,
     TerminatingClause
 {
@@ -57,6 +58,14 @@ public class SqlBuilder implements
     @Override
     public InnerJoinClause innerJoin(String table) {
         stringBuilder.append(" INNER JOIN ")
+            .append(table);
+
+        return this;
+    }
+
+    @Override
+    public LeftOuterJoinClause leftJoin(String table) {
+        stringBuilder.append(" LEFT OUTER JOIN ")
             .append(table);
 
         return this;

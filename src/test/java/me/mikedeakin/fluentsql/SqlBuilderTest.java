@@ -97,4 +97,56 @@ public class SqlBuilderTest {
                 " WHERE some_table.col2 = another_table.col2"
         );
     }
+
+    @Test
+    void shouldBuildSelectStatementWithLeftOuterJoin() {
+        assertThat(SqlBuilder
+            .select("*")
+            .from("some_table")
+            .leftJoin("another_table")
+            .on("some_table.col1 = another_table.col1")
+            .build()
+        ).isEqualTo(
+            "SELECT *" +
+                " FROM some_table" +
+                " LEFT OUTER JOIN another_table" +
+                " ON some_table.col1 = another_table.col1"
+        );
+    }
+
+    @Test
+    void shouldBuildSelectStatementWithLeftOuterJoinAndMultipleJoinConditions() {
+        assertThat(SqlBuilder
+            .select("*")
+            .from("some_table")
+            .leftJoin("another_table")
+            .on("some_table.col1 = another_table.col1")
+            .andOn("some_table.col2 = another_table.col2")
+            .build()
+        ).isEqualTo(
+            "SELECT *" +
+                " FROM some_table" +
+                " LEFT OUTER JOIN another_table" +
+                " ON some_table.col1 = another_table.col1" +
+                " AND ON some_table.col2 = another_table.col2"
+        );
+    }
+
+    @Test
+    void shouldAllowWhereClausesAfterLeftOuterJoins() {
+        assertThat(SqlBuilder
+            .select("*")
+            .from("some_table")
+            .leftJoin("another_table")
+            .on("some_table.col1 = another_table.col1")
+            .where("some_table.col2 = another_table.col2")
+            .build()
+        ).isEqualTo(
+            "SELECT *" +
+                " FROM some_table" +
+                " LEFT OUTER JOIN another_table" +
+                " ON some_table.col1 = another_table.col1" +
+                " WHERE some_table.col2 = another_table.col2"
+        );
+    }
 }
