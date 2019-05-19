@@ -1,4 +1,4 @@
-package me.mikedeakin.fluentsql.clauses;
+package io.mikedeakin.fluentsql.clauses;
 
 public interface CanWhere {
 

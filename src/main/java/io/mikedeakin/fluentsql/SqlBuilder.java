@@ -1,5 +1,6 @@
-package me.mikedeakin.fluentsql;
+package io.mikedeakin.fluentsql;
 
+import io.mikedeakin.fluentsql.clauses.*;
 import me.mikedeakin.fluentsql.clauses.*;
 
 public class SqlBuilder implements

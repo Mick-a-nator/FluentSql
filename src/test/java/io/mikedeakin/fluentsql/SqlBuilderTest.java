@@ -1,4 +1,4 @@
-package me.mikedeakin.fluentsql;
+package io.mikedeakin.fluentsql;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
