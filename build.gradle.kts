@@ -12,12 +12,45 @@ buildscript {
 }
 
 plugins {
-    java
+    `java-library`
+    `maven-publish`
+    signing
     id("info.solidsoft.pitest") version("1.4.0")
 }
 
-group = "me.mikedeakin"
+group = "io.mikedeakin"
 version = "1.0-SNAPSHOT"
+
+tasks.register<Jar>("sourcesJar") {
+    classifier = "sources"
+    from(sourceSets["main"].allJava)
+}
+
+tasks.register<Jar>("javadocJar") {
+    classifier = "javadoc"
+    from(tasks.getByName("javadoc", Javadoc::class).destinationDir)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenFluentSql") {
+            from(components["java"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "local"
+            url = uri("file://$buildDir/repo")
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["mavenFluentSql"])
+}
 
 repositories {
     mavenCentral()

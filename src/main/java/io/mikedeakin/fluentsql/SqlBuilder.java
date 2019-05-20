@@ -1,7 +1,7 @@
 package io.mikedeakin.fluentsql;
 
 import io.mikedeakin.fluentsql.clauses.*;
-import me.mikedeakin.fluentsql.clauses.*;
+import io.mikedeakin.fluentsql.clauses.*;
 
 public class SqlBuilder implements
     SelectClause,
