@@ -45,6 +45,14 @@ publishing {
             name = "local"
             url = uri("file://$buildDir/repo")
         }
+        maven {
+            name = "snapshot"
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
     }
 }
 
