@@ -1,7 +1,6 @@
 package io.mikedeakin.fluentsql;
 
 import io.mikedeakin.fluentsql.clauses.*;
-import io.mikedeakin.fluentsql.clauses.*;
 
 public class SqlBuilder implements
     SelectClause,
@@ -9,6 +8,7 @@ public class SqlBuilder implements
     WhereClause,
     JoinClause,
     OnClause,
+    GroupByClause,
     TerminatingClause
 {
     private StringBuilder stringBuilder;
@@ -91,5 +91,12 @@ public class SqlBuilder implements
     public OnClause andOn(String predicate) {
         stringBuilder.append(" AND");
         return this.on(predicate);
+    }
+
+    @Override
+    public GroupByClause groupBy(String... columns) {
+        stringBuilder.append(" GROUP BY ");
+        stringBuilder.append(String.join(", ", columns));
+        return this;
     }
 }

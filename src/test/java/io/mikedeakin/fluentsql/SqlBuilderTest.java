@@ -214,4 +214,38 @@ public class SqlBuilderTest {
             );
         }
     }
+
+    @Nested
+    class GroupByClauses {
+
+       @Test
+       void shouldAllowGroupByClauseAfterFromClause() {
+          assertThat(SqlBuilder
+              .select("*")
+              .from("some_table")
+              .groupBy("column1", "column2")
+              .build()
+          ).isEqualTo(
+              "SELECT *" +
+                  " FROM some_table" +
+                  " GROUP BY column1, column2"
+          );
+       }
+
+        @Test
+        void shouldAllowGroupByClauseAfterWhereClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .where("column1 IN (1, 2, 3)")
+                .groupBy("column1", "column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " WHERE column1 IN (1, 2, 3)" +
+                    " GROUP BY column1, column2"
+            );
+        }
+    }
 }
