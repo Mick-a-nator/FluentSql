@@ -247,5 +247,23 @@ public class SqlBuilderTest {
                     " GROUP BY column1, column2"
             );
         }
+
+        @Test
+        void shouldAllowGroupByClauseAfterJoinClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .innerJoin("other_table")
+                .on("some_table.column1 = other_table.column1")
+                .groupBy("column1", "column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " INNER JOIN other_table" +
+                    " ON some_table.column1 = other_table.column1" +
+                    " GROUP BY column1, column2"
+            );
+        }
     }
 }
