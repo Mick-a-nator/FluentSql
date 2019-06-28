@@ -9,6 +9,7 @@ public class SqlBuilder implements
     JoinClause,
     OnClause,
     GroupByClause,
+    OrderByClause,
     TerminatingClause
 {
     private StringBuilder stringBuilder;
@@ -96,6 +97,13 @@ public class SqlBuilder implements
     @Override
     public GroupByClause groupBy(String... columns) {
         stringBuilder.append(" GROUP BY ");
+        stringBuilder.append(String.join(", ", columns));
+        return this;
+    }
+
+    @Override
+    public OrderByClause orderBy(String... columns) {
+        stringBuilder.append(" ORDER BY ");
         stringBuilder.append(String.join(", ", columns));
         return this;
     }

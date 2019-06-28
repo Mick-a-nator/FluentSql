@@ -266,4 +266,22 @@ public class SqlBuilderTest {
             );
         }
     }
+
+    @Nested
+    class OrderByClauses {
+
+        @Test
+        void shouldAllowGroupByClauseAfterFromClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .orderBy("column1", "column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " ORDER BY column1, column2"
+            );
+        }
+    }
 }
