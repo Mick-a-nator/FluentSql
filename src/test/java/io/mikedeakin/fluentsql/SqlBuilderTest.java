@@ -271,7 +271,7 @@ public class SqlBuilderTest {
     class OrderByClauses {
 
         @Test
-        void shouldAllowGroupByClauseAfterFromClause() {
+        void shouldAllowOrderByClauseAfterFromClause() {
             assertThat(SqlBuilder
                 .select("*")
                 .from("some_table")
@@ -280,6 +280,22 @@ public class SqlBuilderTest {
             ).isEqualTo(
                 "SELECT *" +
                     " FROM some_table" +
+                    " ORDER BY column1, column2"
+            );
+        }
+
+        @Test
+        void shouldAllowOrderByClauseAfterWhereClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .where("column1 IN (1, 2, 3)")
+                .orderBy("column1", "column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " WHERE column1 IN (1, 2, 3)" +
                     " ORDER BY column1, column2"
             );
         }
