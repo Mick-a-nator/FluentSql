@@ -299,5 +299,23 @@ public class SqlBuilderTest {
                     " ORDER BY column1, column2"
             );
         }
+
+        @Test
+        void shouldAllowOrderByClauseAfterJoinClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .innerJoin("other_table")
+                .on("some_table.column1 = other_table.column1")
+                .orderBy("column1", "column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " INNER JOIN other_table" +
+                    " ON some_table.column1 = other_table.column1" +
+                    " ORDER BY column1, column2"
+            );
+        }
     }
 }
