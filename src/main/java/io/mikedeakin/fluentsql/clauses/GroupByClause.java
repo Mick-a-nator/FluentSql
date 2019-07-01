@@ -1,4 +1,4 @@
 package io.mikedeakin.fluentsql.clauses;
 
-public interface GroupByClause extends TerminatingClause {
+public interface GroupByClause extends CanOrderBy, TerminatingClause {
 }

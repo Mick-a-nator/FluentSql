@@ -317,5 +317,21 @@ public class SqlBuilderTest {
                     " ORDER BY column1, column2"
             );
         }
+
+        @Test
+        void shouldAllowOrderByClauseAfterGroupByClause() {
+            assertThat(SqlBuilder
+                .select("*")
+                .from("some_table")
+                .groupBy("column1")
+                .orderBy("column2")
+                .build()
+            ).isEqualTo(
+                "SELECT *" +
+                    " FROM some_table" +
+                    " GROUP BY column1" +
+                    " ORDER BY column2"
+            );
+        }
     }
 }
