@@ -1,5 +1,6 @@
 package io.mikedeakin.fluentsql;
 
+import io.mikedeakin.fluentsql.clauses.TerminatingClause;
 import io.mikedeakin.fluentsql.clauses.select.*;
 
 public class SelectBuilder implements
@@ -33,11 +34,6 @@ public class SelectBuilder implements
             .append(tableName);
 
         return this;
-    }
-
-    @Override
-    public String build() {
-        return stringBuilder.toString();
     }
 
     @Override
@@ -106,5 +102,10 @@ public class SelectBuilder implements
         stringBuilder.append(" ORDER BY ");
         stringBuilder.append(String.join(", ", columns));
         return this;
+    }
+
+    @Override
+    public String build() {
+        return stringBuilder.toString();
     }
 }

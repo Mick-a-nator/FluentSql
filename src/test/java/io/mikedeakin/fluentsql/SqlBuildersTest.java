@@ -9,6 +9,12 @@ class SqlBuildersTest {
     @Test
     void shouldCreateSelectBuilder() {
         assertThat(SqlBuilders.select("column1", "column2"))
-            .isEqualTo(SelectBuilder.select("column1", "column2"));
+            .isEqualToComparingFieldByFieldRecursively(SelectBuilder.select("column1", "column2"));
+    }
+
+    @Test
+    void shouldCreateUpdateBuilder() {
+        assertThat(SqlBuilders.update("table_name"))
+            .isEqualToComparingFieldByFieldRecursively(UpdateBuilder.update("table_name"));
     }
 }
