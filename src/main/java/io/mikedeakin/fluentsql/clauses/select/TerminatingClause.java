@@ -1,4 +1,4 @@
-package io.mikedeakin.fluentsql.clauses;
+package io.mikedeakin.fluentsql.clauses.select;
 
 public interface TerminatingClause {
 

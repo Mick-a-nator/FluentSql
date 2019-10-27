@@ -1,8 +1,8 @@
 package io.mikedeakin.fluentsql;
 
-import io.mikedeakin.fluentsql.clauses.*;
+import io.mikedeakin.fluentsql.clauses.select.*;
 
-public class SqlBuilder implements
+public class SelectBuilder implements
     SelectClause,
     FromClause,
     WhereClause,
@@ -12,19 +12,19 @@ public class SqlBuilder implements
     OrderByClause,
     TerminatingClause
 {
-    private StringBuilder stringBuilder;
+    private final StringBuilder stringBuilder;
 
-    private SqlBuilder() {
+    private SelectBuilder() {
         stringBuilder = new StringBuilder();
     }
 
-    public static SelectClause select(String... columnNames) {
-        SqlBuilder sqlBuilder = new SqlBuilder();
+    protected static SelectClause select(String... columnNames) {
+        SelectBuilder selectBuilder = new SelectBuilder();
 
-        sqlBuilder.stringBuilder.append("SELECT ")
+        selectBuilder.stringBuilder.append("SELECT ")
             .append(String.join(", ", columnNames));
 
-        return sqlBuilder;
+        return selectBuilder;
     }
 
     @Override

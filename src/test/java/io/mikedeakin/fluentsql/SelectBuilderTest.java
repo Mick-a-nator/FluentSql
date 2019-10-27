@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SqlBuilderTest {
+public class SelectBuilderTest {
 
     @Test
     void shouldBuildSimpleSelectStatement() {
-        assertThat(SqlBuilder
+        assertThat(SelectBuilder
             .select("*")
             .from("table_name")
             .build()
@@ -18,7 +18,7 @@ public class SqlBuilderTest {
 
     @Test
     void shouldBuildSelectStatementWithColumnNames() {
-        assertThat(SqlBuilder
+        assertThat(SelectBuilder
             .select("column1", "column2", "column3")
             .from("table_name")
             .build()
@@ -27,7 +27,7 @@ public class SqlBuilderTest {
 
     @Test
     void shouldBuildSelectStatementWithWhereClause() {
-        assertThat(SqlBuilder
+        assertThat(SelectBuilder
             .select("column1", "column2")
             .from("table_name")
             .where("column1 > 6")
@@ -37,7 +37,7 @@ public class SqlBuilderTest {
 
     @Test
     void shouldBuildSelectStatementWithAdditionalWhereClauses() {
-        assertThat(SqlBuilder
+        assertThat(SelectBuilder
             .select("column1", "column2")
             .from("table_name")
             .where("column1 > 6")
@@ -52,7 +52,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithInnerJoin() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .innerJoin("another_table")
@@ -68,7 +68,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithInnerJoinAndMultipleJoinConditions() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .innerJoin("another_table")
@@ -86,7 +86,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowWhereClausesAfterInnerJoins() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .innerJoin("another_table")
@@ -108,7 +108,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithLeftOuterJoin() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .leftJoin("another_table")
@@ -124,7 +124,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithLeftOuterJoinAndMultipleJoinConditions() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .leftJoin("another_table")
@@ -142,7 +142,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowWhereClausesAfterLeftOuterJoins() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .leftJoin("another_table")
@@ -164,7 +164,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithRightOuterJoin() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .rightJoin("another_table")
@@ -180,7 +180,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldBuildSelectStatementWithRightOuterJoinAndMultipleJoinConditions() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .rightJoin("another_table")
@@ -198,7 +198,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowWhereClausesAfterRightOuterJoins() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .rightJoin("another_table")
@@ -220,7 +220,7 @@ public class SqlBuilderTest {
 
        @Test
        void shouldAllowGroupByClauseAfterFromClause() {
-          assertThat(SqlBuilder
+          assertThat(SelectBuilder
               .select("*")
               .from("some_table")
               .groupBy("column1", "column2")
@@ -234,7 +234,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowGroupByClauseAfterWhereClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .where("column1 IN (1, 2, 3)")
@@ -250,7 +250,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowGroupByClauseAfterJoinClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .innerJoin("other_table")
@@ -272,7 +272,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowOrderByClauseAfterFromClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .orderBy("column1", "column2")
@@ -286,7 +286,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowOrderByClauseAfterWhereClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .where("column1 IN (1, 2, 3)")
@@ -302,7 +302,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowOrderByClauseAfterJoinClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .innerJoin("other_table")
@@ -320,7 +320,7 @@ public class SqlBuilderTest {
 
         @Test
         void shouldAllowOrderByClauseAfterGroupByClause() {
-            assertThat(SqlBuilder
+            assertThat(SelectBuilder
                 .select("*")
                 .from("some_table")
                 .groupBy("column1")
