@@ -8,7 +8,7 @@ class SqlBuildersTest {
 
     @Test
     void shouldCreateSelectBuilder() {
-        assertThat(SqlBuilders.select("*"))
-            .isEqualTo(SelectBuilder.select("*"));
+        assertThat(SqlBuilders.select("column1", "column2"))
+            .isEqualTo(SelectBuilder.select("column1", "column2"));
     }
 }

@@ -6,7 +6,7 @@ public class SqlBuilders {
 
     private SqlBuilders() {}
 
-    public static SelectClause select(String column) {
+    public static SelectClause select(String... column) {
         return SelectBuilder.select(column);
     }
 }
