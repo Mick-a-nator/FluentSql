@@ -13,99 +13,85 @@ public class SelectBuilder implements
     OrderByClause,
     TerminatingClause
 {
-    private final StringBuilder stringBuilder;
+    private final StringBuilder statement;
 
     private SelectBuilder() {
-        stringBuilder = new StringBuilder();
+        statement = new StringBuilder();
+    }
+
+    private SelectBuilder append(String value) {
+        this.statement.append(value);
+        return this;
     }
 
     protected static SelectClause select(String... columnNames) {
-        SelectBuilder selectBuilder = new SelectBuilder();
-
-        selectBuilder.stringBuilder.append("SELECT ")
+        return new SelectBuilder()
+            .append("SELECT ")
             .append(String.join(", ", columnNames));
-
-        return selectBuilder;
     }
 
     @Override
     public FromClause from(String tableName) {
-        stringBuilder.append(" FROM ")
+        return this.append(" FROM ")
             .append(tableName);
-
-        return this;
     }
 
     @Override
     public WhereClause where(String predicate) {
-        stringBuilder.append(" WHERE ")
+        return this.append(" WHERE ")
             .append(predicate);
-
-        return this;
     }
 
     @Override
     public WhereClause andWhere(String predicate) {
-        stringBuilder.append(" AND ")
+        return this.append(" AND ")
             .append(predicate);
-
-        return this;
     }
 
     @Override
     public JoinClause innerJoin(String table) {
-        stringBuilder.append(" INNER JOIN ")
+        return this.append(" INNER JOIN ")
             .append(table);
-
-        return this;
     }
 
     @Override
     public JoinClause leftJoin(String table) {
-        stringBuilder.append(" LEFT OUTER JOIN ")
+        return this.append(" LEFT OUTER JOIN ")
             .append(table);
-
-        return this;
     }
 
     @Override
     public JoinClause rightJoin(String table) {
-        stringBuilder.append(" RIGHT OUTER JOIN ")
+        return this.append(" RIGHT OUTER JOIN ")
             .append(table);
-
-        return this;
     }
 
     @Override
     public OnClause on(String predicate) {
-        stringBuilder.append(" ON ")
+        return this.append(" ON ")
             .append(predicate);
-
-        return this;
     }
 
     @Override
     public OnClause andOn(String predicate) {
-        stringBuilder.append(" AND");
-        return this.on(predicate);
+        return this.append(" AND")
+            .on(predicate);
     }
 
     @Override
     public GroupByClause groupBy(String... columns) {
-        stringBuilder.append(" GROUP BY ");
-        stringBuilder.append(String.join(", ", columns));
-        return this;
+        return this.append(" GROUP BY ")
+            .append(String.join(", ", columns));
     }
 
     @Override
     public OrderByClause orderBy(String... columns) {
-        stringBuilder.append(" ORDER BY ");
-        stringBuilder.append(String.join(", ", columns));
-        return this;
+        return this.append(" ORDER BY ")
+            .append(String.join(", ", columns));
     }
 
     @Override
     public String build() {
-        return stringBuilder.toString();
+        return statement.toString();
     }
 }
