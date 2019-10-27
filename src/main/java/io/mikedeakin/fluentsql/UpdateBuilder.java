@@ -2,8 +2,9 @@ package io.mikedeakin.fluentsql;
 
 import io.mikedeakin.fluentsql.clauses.update.SetClause;
 import io.mikedeakin.fluentsql.clauses.update.UpdateClause;
+import io.mikedeakin.fluentsql.clauses.update.WhereClause;
 
-public class UpdateBuilder implements UpdateClause, SetClause {
+public class UpdateBuilder implements UpdateClause, SetClause, WhereClause {
 
     private final StringBuilder statement;
 
@@ -28,6 +29,12 @@ public class UpdateBuilder implements UpdateClause, SetClause {
             .append(column)
             .append(" = ")
             .append(value);
+    }
+
+    @Override
+    public WhereClause where(String predicate) {
+        return this.append(" WHERE ")
+            .append(predicate);
     }
 
     @Override
